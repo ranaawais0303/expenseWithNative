@@ -4,9 +4,11 @@ import IconButton from "../components/UI/IconButton";
 import { GlobalStyles } from "../constant/styles";
 import Button from "../components/UI/Button";
 import { useNavigation } from "@react-navigation/native";
+import { useExpenses } from "../store/expenses-context";
 function ManageExpenses({ route, navigation }) {
-  const editedExpenseId = route.params?.expenseId;
+  const expenseCtx = useExpenses();
 
+  const editedExpenseId = route.params?.expenseId;
   //!! this covert into boolean
   const isEditing = !!editedExpenseId;
 
@@ -16,12 +18,26 @@ function ManageExpenses({ route, navigation }) {
     });
   }, [navigation, isEditing]);
   function deleteExpenseHandler() {
+    expenseCtx.deleteExpense(editedExpenseId);
     navigation.goBack();
   }
   function cancelHandler() {
     navigation.goBack();
   }
   function confirmHandler() {
+    if (isEditing) {
+      expenseCtx.updateExpense(editedExpenseId, {
+        description: "Test!!!",
+        amount: 99.9,
+        date: new Date("2023-01-05"),
+      });
+    } else {
+      expenseCtx.addExpense({
+        description: "Test",
+        amount: 199.9,
+        date: new Date("2023-01-07"),
+      });
+    }
     navigation.goBack();
   }
 
