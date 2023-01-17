@@ -6,6 +6,7 @@ import Button from "../components/UI/Button";
 import { useNavigation } from "@react-navigation/native";
 import { useExpenses } from "../store/expenses-context";
 import ExpenseForm from "../components/ManageExpense/ExpenseForm";
+import { storeExpense } from "../util/http";
 function ManageExpenses({ route, navigation }) {
   const expenseCtx = useExpenses();
 
@@ -32,6 +33,7 @@ function ManageExpenses({ route, navigation }) {
     if (isEditing) {
       expenseCtx.updateExpense(editedExpenseId, expenseData);
     } else {
+      storeExpense(expenseData);
       expenseCtx.addExpense(expenseData);
     }
     navigation.goBack();
