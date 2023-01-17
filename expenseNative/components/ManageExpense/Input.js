@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     minHeight: 100,
     textAlignVertical: "top",
   },
-  invalidInput: {
+  invalidLabel: {
     color: GlobalStyles.colors.error500,
   },
   invalidInput: {
