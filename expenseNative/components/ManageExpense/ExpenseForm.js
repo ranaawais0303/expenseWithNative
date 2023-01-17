@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, Alert } from "react-native";
 import Button from "../UI/Button";
 import Input from "./Input";
 import { getFormattedDate } from "../../util/date";
+import { GlobalStyles } from "../../constant/styles";
 
 function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
   const [inputs, setInputs] = useState({
@@ -66,6 +67,7 @@ function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
         <Input
           style={styles.rowInput}
           label="Amount"
+          invalid={!inputs.amount.isValid}
           textInputConfig={{
             keyboardType: "decimal-pad",
             onChangeText: inputChangeHandler.bind(this, "amount"),
@@ -75,6 +77,7 @@ function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
         <Input
           style={styles.rowInput}
           label="Date"
+          invalid={!inputs.date.isValid}
           textInputConfig={{
             placeholder: "YYYY-MM-DD",
             maxLength: 10,
@@ -85,6 +88,7 @@ function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
       </View>
       <Input
         label="Description"
+        invalid={!inputs.description.isValid}
         textInputConfig={{
           multiline: true,
           // autoCapitalize:'none',
@@ -94,7 +98,9 @@ function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
         }}
       />
       {formIsInvalid && (
-        <Text>Invalid Input Vales please check your entered Data!</Text>
+        <Text style={styles.errorText}>
+          Invalid Input Vales please check your entered Data!
+        </Text>
       )}
       <View style={styles.buttonContainer}>
         <Button style={styles.button} mode="flat" onPress={onCancel}>
@@ -126,6 +132,11 @@ const styles = StyleSheet.create({
     color: "white",
     textAlign: "center",
     marginVertical: 24,
+  },
+  errorText: {
+    textAlign: "center",
+    color: GlobalStyles.colors.error500,
+    margin: 8,
   },
   button: {
     minWidth: 120,
