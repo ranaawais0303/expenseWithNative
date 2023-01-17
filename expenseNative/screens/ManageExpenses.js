@@ -20,19 +20,25 @@ function ManageExpenses({ route, navigation }) {
       title: isEditing ? "Edit Expense" : "Add Expense",
     });
   }, [navigation, isEditing]);
+
+  ///delete handler
   function deleteExpenseHandler() {
     expenseCtx.deleteExpense(editedExpenseId);
     navigation.goBack();
   }
+
+  //cancel handler
   function cancelHandler() {
     navigation.goBack();
   }
-  function confirmHandler(expenseData) {
+
+  //confirm handler
+  async function confirmHandler(expenseData) {
     if (isEditing) {
       expenseCtx.updateExpense(editedExpenseId, expenseData);
     } else {
-      storeExpense(expenseData);
-      expenseCtx.addExpense(expenseData);
+      const id = await storeExpense(expenseData);
+      expenseCtx.addExpense({ ...expenseData, id: id });
     }
     navigation.goBack();
   }
