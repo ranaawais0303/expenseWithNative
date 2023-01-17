@@ -2,8 +2,6 @@ import { useLayoutEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import IconButton from "../components/UI/IconButton";
 import { GlobalStyles } from "../constant/styles";
-import Button from "../components/UI/Button";
-import { useNavigation } from "@react-navigation/native";
 import { useExpenses } from "../store/expenses-context";
 import ExpenseForm from "../components/ManageExpense/ExpenseForm";
 import { storeExpense } from "../util/http";
